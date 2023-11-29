@@ -36,9 +36,6 @@ require("./config/db")()
     );
     app.use(express.json({ limit: "50mb" }));
 
-    // declare public access for assets
-    app.use("/assets", express.static(path.join(__dirname, "assets")));
-
     // Uncomment when deployed to disable calls from postman
     // Only use when client and server are at separate deployments
     // app.use(whitelisted);
@@ -46,19 +43,7 @@ require("./config/db")()
     // Routes
     require("./routes")(app);
 
-    // used when deployed, make sure it is below routes.
-    app.use(express.static(path.join(__dirname, "./view")));
-    app.get("*", (_, res) =>
-      res.sendFile(path.resolve(__dirname, "./", "view", "index.html"))
-    );
-
     const server = http.createServer(app);
-
-    require("./config/socket")(
-      new Server(server, {
-        cors: corsConfig, // Pass configuration to websocket
-      })
-    );
 
     const port = process.env.PORT || 5001; // Dynamic port for deployment
     server.listen(port, () => {

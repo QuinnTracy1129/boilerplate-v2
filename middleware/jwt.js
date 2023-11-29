@@ -1,5 +1,7 @@
 const jwt = require("jsonwebtoken"),
-  Users = require("../models/Users");
+  Users = require("../models/Users"),
+  restriction = require("../config/access"),
+  { URL } = require("url");
 
 const verifyToken = (token) =>
   new Promise((resolve, reject) =>
@@ -12,8 +14,8 @@ const verifyToken = (token) =>
     })
   );
 
-exports.validate = (req, res, proceed) => {
-  const { authorization } = req.headers;
+exports.validate = ({ headers, originalUrl }, res, proceed) => {
+  const { authorization } = headers;
 
   if (!authorization)
     return res.status(401).json({
@@ -28,8 +30,8 @@ exports.validate = (req, res, proceed) => {
     });
 
   verifyToken(authorization.split(" ")[1])
-    .then((response) =>
-      Users.findById(response._id)
+    .then(({ _id, role }) =>
+      Users.findById(_id)
         .select("-password")
         .then((user) => {
           // when the _id did not match anything
@@ -43,6 +45,16 @@ exports.validate = (req, res, proceed) => {
             return res.status(401).json({
               error: "Unauthorized",
               message: "Account has been ceased.",
+            });
+
+          const { pathname } = new URL(originalUrl, `http://${headers.host}`),
+            [endpoint, action] = pathname.split("/").filter(Boolean),
+            policy = restriction[role][endpoint];
+
+          if (policy && policy.includes(action))
+            return res.status(401).json({
+              error: "Unauthorized",
+              message: "You cannot access this endpoint.",
             });
 
           res.locals.caller = { ...user._doc };

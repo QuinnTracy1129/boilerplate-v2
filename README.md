@@ -1,6 +1,6 @@
 # Description
 
-This is a comprehensive examination system designed to facilitate efficient test-taking. It provides a user-friendly platform for creating, managing, and taking exams, making it an ideal solution for a wide range of assessments.
+This is Boilerplate v2 for Questronix Refresher Activity
 
 # Live Preview
 
@@ -52,7 +52,7 @@ Follow these steps to set up and run the project on your local machine:
    - Open a web browser and navigate to the following URL to access the project:
 
      ```
-     http://localhost:5000
+     http://localhost:5001
      ```
 
    You should now be able to interact with the project in your web browser.
