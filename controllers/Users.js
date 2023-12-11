@@ -53,6 +53,8 @@ exports.login = (req, res) => {
 };
 
 exports.save = (req, res) => {
+  console.log("here");
+  console.log(req);
   Entity.create(req.body)
     .then((payload) =>
       res.status(201).json({
