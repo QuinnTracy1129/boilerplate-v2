@@ -53,9 +53,6 @@ exports.login = ({ query }, res) => {
 };
 
 exports.save = (req, res) => {
-  console.log(body);
-  console.log(headers);
-
   res.json(req);
 
   // Entity.create(body)
