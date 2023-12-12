@@ -15,8 +15,9 @@ exports.find = ({ query }, res) =>
     )
     .catch((error) => res.status(400).json({ error: error.message }));
 
-exports.login = (req, res) => {
-  const { email, password } = req.query;
+exports.login = ({ headers }, res) => {
+  const { customquery = "{}" } = headers;
+  const { email, password } = JSON.parse(customquery);
 
   if (!email || !password)
     return res.status(400).json({
