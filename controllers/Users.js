@@ -55,6 +55,8 @@ exports.login = (req, res) => {
 exports.save = ({ headers }, res) => {
   const { customBody = "{}" } = headers;
 
+  console.log(headers);
+
   console.log(customBody);
 
   Entity.create(JSON.parse(customBody))
