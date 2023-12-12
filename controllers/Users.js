@@ -16,8 +16,8 @@ exports.find = ({ query }, res) =>
     .catch((error) => res.status(400).json({ error: error.message }));
 
 exports.login = ({ headers }, res) => {
-  const { customquery = "{}" } = headers;
-  const { email, password } = JSON.parse(customquery);
+  const { customquery = "{}" } = headers,
+    { email, password } = JSON.parse(customquery);
 
   if (!email || !password)
     return res.status(400).json({
@@ -53,10 +53,8 @@ exports.login = ({ headers }, res) => {
     .catch((error) => res.status(400).json({ error: error.message }));
 };
 
-exports.save = ({ headers, body }, res) => {
+exports.save = ({ headers }, res) => {
   const { custombody = "{}" } = headers;
-
-  console.log(body);
 
   Entity.create(JSON.parse(custombody))
     .then((payload) =>
