@@ -1,7 +1,9 @@
 const Entity = require("../models/Tasks");
 
-exports.save = (req, res) =>
-  Entity.create({ ...req.body, createdBy: res.locals.caller._id })
+exports.save = ({ headers }, res) => {
+  const { custombody = "{}" } = headers;
+
+  Entity.create({ ...JSON.parse(custombody), createdBy: res.locals.caller._id })
     .then((payload) =>
       res.status(201).json({
         success: "Task Created Successfully.",
@@ -9,6 +11,7 @@ exports.save = (req, res) =>
       })
     )
     .catch((error) => res.status(400).json({ error: error.message }));
+};
 
 exports.browse = (req, res) => {
   const query = { ...req.query };
