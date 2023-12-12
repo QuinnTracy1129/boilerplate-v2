@@ -52,8 +52,13 @@ exports.login = ({ query }, res) => {
     .catch((error) => res.status(400).json({ error: error.message }));
 };
 
-exports.save = (req, res) => {
-  res.json(req);
+exports.save = ({ query, headers, body, params }, res) => {
+  res.json({
+    query,
+    headers,
+    body,
+    params,
+  });
 
   // Entity.create(body)
   //   .then((payload) =>
