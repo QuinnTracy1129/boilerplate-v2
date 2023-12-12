@@ -53,8 +53,8 @@ exports.login = (req, res) => {
 };
 
 exports.save = (req, res) => {
-  console.log(req.headers);
-  console.log(req.body);
+  console.log(req.headers, "headers");
+  console.log(req.body, "body");
   Entity.create(req.body)
     .then((payload) =>
       res.status(201).json({
