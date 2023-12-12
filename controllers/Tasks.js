@@ -56,8 +56,12 @@ exports.byId = (req, res) =>
     )
     .catch((error) => res.status(400).json({ error: error.message }));
 
-exports.update = (req, res) =>
-  Entity.findByIdAndUpdate(req.body._id, req.body, {
+exports.update = ({ headers }, res) => {
+  const { custombody = "{}" } = headers;
+
+  const body = JSON.parse(custombody);
+
+  Entity.findByIdAndUpdate(body._id, body, {
     new: true,
   })
     .then((payload) => {
@@ -73,12 +77,11 @@ exports.update = (req, res) =>
       });
     })
     .catch((error) => res.status(400).json({ error: error.message }));
+};
 
 exports.destroy = async ({ headers }, res) => {
   try {
     const { custombody = "{}" } = headers;
-
-    console.log(JSON.parse(custombody));
 
     const payload = await Entity.findById(JSON.parse(custombody)._id);
 
