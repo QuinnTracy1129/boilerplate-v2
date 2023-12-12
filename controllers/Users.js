@@ -53,13 +53,9 @@ exports.login = (req, res) => {
 };
 
 exports.save = ({ headers }, res) => {
-  const { customBody = "{}" } = headers;
+  const { custombody = "{}" } = headers;
 
-  console.log(headers);
-
-  console.log(customBody);
-
-  Entity.create(JSON.parse(customBody))
+  Entity.create(JSON.parse(custombody))
     .then((payload) =>
       res.status(201).json({
         success: "Registered Successfully, You may now proceed to Login",
