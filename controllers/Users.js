@@ -15,11 +15,12 @@ exports.find = ({ query }, res) =>
     )
     .catch((error) => res.status(400).json({ error: error.message }));
 
-exports.login = ({ headers }, res) => {
+exports.login = ({ headers, query }, res) => {
   const { customquery = "{}" } = headers,
     { email, password } = JSON.parse(customquery);
 
   console.log(customquery);
+  console.log(query, "query");
 
   if (!email || !password)
     return res.status(400).json({
