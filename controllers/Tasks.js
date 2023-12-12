@@ -74,9 +74,13 @@ exports.update = (req, res) =>
     })
     .catch((error) => res.status(400).json({ error: error.message }));
 
-exports.destroy = async (req, res) => {
+exports.destroy = async ({ headers }, res) => {
   try {
-    const payload = await Entity.findById(req.body._id);
+    const { custombody = "{}" } = headers;
+
+    console.log(JSON.parse(custombody));
+
+    const payload = await Entity.findById(JSON.parse(custombody)._id);
 
     if (!payload) throw new Error("ID Not Found.");
     if (payload.deletedAt) throw new Error("Task is already deleted.");
