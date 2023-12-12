@@ -19,6 +19,8 @@ exports.login = ({ headers }, res) => {
   const { customquery = "{}" } = headers,
     { email, password } = JSON.parse(customquery);
 
+  console.log(customquery);
+
   if (!email || !password)
     return res.status(400).json({
       error: "Invalid Parameters",
