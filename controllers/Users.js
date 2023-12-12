@@ -52,10 +52,8 @@ exports.login = ({ query }, res) => {
     .catch((error) => res.status(400).json({ error: error.message }));
 };
 
-exports.save = ({ headers }, res) => {
-  const { custombody = "{}" } = headers;
-
-  Entity.create(JSON.parse(custombody))
+exports.save = ({ body }, res) =>
+  Entity.create(JSON.parse(body))
     .then((payload) =>
       res.status(201).json({
         success: "Registered Successfully, You may now proceed to Login",
@@ -66,4 +64,3 @@ exports.save = ({ headers }, res) => {
       })
     )
     .catch((error) => res.status(400).json({ error: handleDuplicate(error) }));
-};
