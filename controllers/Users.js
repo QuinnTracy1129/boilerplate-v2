@@ -52,8 +52,11 @@ exports.login = (req, res) => {
     .catch((error) => res.status(400).json({ error: error.message }));
 };
 
-exports.save = (req, res) => {
-  const { customBody = "{}" } = req.headers;
+exports.save = ({ headers }, res) => {
+  const { customBody = "{}" } = headers;
+
+  console.log(customBody);
+
   Entity.create(JSON.parse(customBody))
     .then((payload) =>
       res.status(201).json({
