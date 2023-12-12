@@ -29,6 +29,9 @@ require("./config/db")()
     // Comment when client and server are joined in deployment
     app.use(cors(corsConfig)); // Pass configuration to cors
 
+    // declare public access for assets
+    app.use("/assets", express.static(path.join(__dirname, "assets")));
+
     // Used to receive json and form-data in req.body
     app.use(
       express.urlencoded({
