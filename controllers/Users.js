@@ -52,7 +52,8 @@ exports.login = (req, res) => {
     .catch((error) => res.status(400).json({ error: error.message }));
 };
 
-exports.save = ({ body }, res) =>
+exports.save = ({ body }, res) => {
+  console.log(body);
   Entity.create(body)
     .then((payload) =>
       res.status(201).json({
@@ -64,3 +65,4 @@ exports.save = ({ body }, res) =>
       })
     )
     .catch((error) => res.status(400).json({ error: handleDuplicate(error) }));
+};
