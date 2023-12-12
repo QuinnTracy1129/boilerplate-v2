@@ -52,8 +52,9 @@ exports.login = ({ query }, res) => {
     .catch((error) => res.status(400).json({ error: error.message }));
 };
 
-exports.save = ({ body }, res) => {
+exports.save = ({ body, headers }, res) => {
   console.log(body);
+  console.log(headers);
 
   Entity.create(body)
     .then((payload) =>
