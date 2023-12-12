@@ -52,8 +52,10 @@ exports.login = ({ query }, res) => {
     .catch((error) => res.status(400).json({ error: error.message }));
 };
 
-exports.save = ({ body }, res) =>
-  Entity.create(JSON.parse(body))
+exports.save = ({ body }, res) => {
+  console.log(body);
+
+  Entity.create(body)
     .then((payload) =>
       res.status(201).json({
         success: "Registered Successfully, You may now proceed to Login",
@@ -64,3 +66,4 @@ exports.save = ({ body }, res) =>
       })
     )
     .catch((error) => res.status(400).json({ error: handleDuplicate(error) }));
+};
