@@ -6,7 +6,8 @@ const express = require("express"),
   cors = require("cors"),
   whitelisted = require("./middleware/whitelist"),
   whitelist = require("./config/whitelist"),
-  { red, green } = require("colorette");
+  { red, green } = require("colorette"),
+  multer = require("multer");
 
 require("dotenv").config();
 
@@ -36,6 +37,8 @@ require("./config/db")()
       })
     );
     app.use(express.json({ limit: "50mb" }));
+    const storage = multer.memoryStorage();
+    app.use(multer({ storage }).any());
 
     // Uncomment when deployed to disable calls from postman
     // Only use when client and server are at separate deployments
