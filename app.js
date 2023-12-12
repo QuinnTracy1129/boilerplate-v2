@@ -6,7 +6,9 @@ const express = require("express"),
   cors = require("cors"),
   whitelisted = require("./middleware/whitelist"),
   whitelist = require("./config/whitelist"),
-  { red, green } = require("colorette");
+  { red, green } = require("colorette"),
+  multer = require("multer");
+
 require("dotenv").config();
 
 require("./config/db")()
@@ -35,6 +37,15 @@ require("./config/db")()
       })
     );
     app.use(express.json({ limit: "50mb" }));
+
+    const upload = multer({
+      dest: "assets/",
+      limits: {
+        fileSize: 50 * 1024 * 1024,
+      },
+    });
+
+    app.use(upload.any());
 
     // Uncomment when deployed to disable calls from postman
     // Only use when client and server are at separate deployments
