@@ -30,14 +30,13 @@ require("./config/db")()
     app.use(cors(corsConfig)); // Pass configuration to cors
 
     // Used to receive json and form-data in req.body
+    app.use(express.json());
     app.use(
       express.urlencoded({
         extended: true,
       })
     );
-    app.use(express.json());
-    const storage = multer.memoryStorage();
-    app.use(multer({ storage }).any());
+    app.use(multer({ storage: multer.memoryStorage() }).any());
 
     // Uncomment when deployed to disable calls from postman
     // Only use when client and server are at separate deployments
