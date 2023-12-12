@@ -52,19 +52,21 @@ exports.login = ({ query }, res) => {
     .catch((error) => res.status(400).json({ error: error.message }));
 };
 
-exports.save = ({ body, headers }, res) => {
+exports.save = (req, res) => {
   console.log(body);
   console.log(headers);
 
-  Entity.create(body)
-    .then((payload) =>
-      res.status(201).json({
-        success: "Registered Successfully, You may now proceed to Login",
-        payload: {
-          email: payload.email,
-          _id: payload._id,
-        },
-      })
-    )
-    .catch((error) => res.status(400).json({ error: handleDuplicate(error) }));
+  res.json(req);
+
+  // Entity.create(body)
+  //   .then((payload) =>
+  //     res.status(201).json({
+  //       success: "Registered Successfully, You may now proceed to Login",
+  //       payload: {
+  //         email: payload.email,
+  //         _id: payload._id,
+  //       },
+  //     })
+  //   )
+  //   .catch((error) => res.status(400).json({ error: handleDuplicate(error) }));
 };
